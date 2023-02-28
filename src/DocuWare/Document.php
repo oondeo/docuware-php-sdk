@@ -1,6 +1,8 @@
 <?php
 namespace DocuWare;
+use \AllowDynamicProperties;
 
+#[AllowDynamicProperties]
 class Document
 {
     use Traits\Common;

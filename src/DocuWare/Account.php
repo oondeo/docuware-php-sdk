@@ -1,9 +1,11 @@
 <?php
 namespace DocuWare;
+use \AllowDynamicProperties;
 
 /**
  * User Account class
  */
+#[AllowDynamicProperties]
 class Account
 {
     use Traits\Common;
