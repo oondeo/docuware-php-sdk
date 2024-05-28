@@ -24,7 +24,7 @@ trait GenericTypes
      */
     private $fieldTypes = ['String' => ['regex' => '.*'],
                           'Int' => ['regex' => '\d+'],
-                          'Decimal' => ['regex' => '\d+(\.\d+)?'],
+                          'Decimal' => ['regex' => '\-?\d+(\.\d+)?'],
                           'Memo' => ['regex' => '.*'],
                           'Date' => ['regex' => '\d{4}-\d{2}-\d{2}'],
                           'DateTime' => ['regex' => '\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z'],
