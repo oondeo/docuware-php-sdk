@@ -54,7 +54,7 @@ trait Common
 
                 foreach($xml->children($namespace, true) as $child) {
 
-                    error_log(print_r($child, true));
+                    //error_log(print_r($child, true));
                     
                     $xml->addChild($label, $child);
 
