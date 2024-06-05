@@ -1,9 +1,11 @@
 <?php
 namespace DocuWare;
+use \AllowDynamicProperties;
 
 /**
  * Organization-related methods
  */
+#[AllowDynamicProperties]
 class Organization
 {
     use Traits\Common;

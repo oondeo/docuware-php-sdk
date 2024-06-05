@@ -1,10 +1,12 @@
 <?php
 namespace DocuWare;
+use \AllowDynamicProperties;
 
 /**
  * HTML rendering class
  * Not sure what the point of this is
  */
+#[AllowDynamicProperties]
 class Html
 {
     use Traits\Common;

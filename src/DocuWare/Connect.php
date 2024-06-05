@@ -376,10 +376,18 @@ class Connect
      * Checks local cookie auth token for valid format
      * @throws \Exception
      */
-    private function validateCookie()
+    private function validateCookie($maxCookieAge=172800)
     {
         $response = false;
+        // Two days
+        $date = time()-$maxCookieAge; 
+        $cookiePath = realpath($this->tmpDir).DIRECTORY_SEPARATOR.self::$cookieFile;
+        $mtime = is_file($cookiePath) ? filemtime($cookiePath) : $date;
 
+        if ($mtime < $date){
+              error_log("Removing old cookie file $mtime >= $date");
+              if ( is_file($cookiePath)) unlink($cookiePath);
+        }
         $localCookie = $this->loadCookieFile();
 
         if (!$localCookie) {

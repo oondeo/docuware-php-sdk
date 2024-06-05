@@ -1,6 +1,8 @@
 <?php
 namespace DocuWare;
+use \AllowDynamicProperties;
 
+#[AllowDynamicProperties]
 class Document
 {
     use Traits\Common;
@@ -155,7 +157,7 @@ class Document
      * @return mixed
      * @throws \Exception
      */
-    public function append($fileCabinetId, $docId, $file)
+    public function append($fileCabinetId, $docId, $file, $fields=null)
     {
         $path = "/FileCabinets/{$fileCabinetId}/Documents/{$docId}";
 
@@ -167,12 +169,23 @@ class Document
         $fileInfo = pathinfo($file);
         $boundary = md5(time());
 
-        $content = "--".$boundary . "\r\n" .
+        if (is_null($fields)) {
+            $content = "--".$boundary . "\r\n" .
                    "Content-Disposition: attachment; filename=\"" . $fileInfo['basename'] . "\"\r\n" .
                    "Content-Type: " . mime_content_type($file) . "\r\n\r\n" .
                    file_get_contents($file) . "\r\n" .
                    "--" . $boundary . "--\r\n\r\n";
-
+        }else{
+            $content = "--".$boundary . "\r\n" .
+                   "Content-Disposition: attachment; filename=document.json; name=document\r\n" .
+                   "Content-Type: application/json; charset=utf-8\r\n\r\n" .
+                   $fields . "\r\n" .        
+                   "--".$boundary . "\r\n" .
+                   "Content-Disposition: attachment; filename=\"" . $fileInfo['basename'] . "\"\r\n" .
+                   "Content-Type: " . mime_content_type($file) . "\r\n\r\n" .
+                   file_get_contents($file) . "\r\n" .
+                   "--" . $boundary . "--\r\n\r\n";
+        }
 
         $url = $this->platform->buildURL($path, $pathOptions);
         $result = $this->platform->postResource($url, $content, null, $boundary);
